@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<!-- 회원관리에 대한 xml문서 입니다. -->
+
+<mapper namespace="member">
+
+	<!-- 전체 회원 목록 보기 -->
+	<select id="getAllList" resultType="memberVo">
+		SELECT * FROM MYMEMBER
+	</select>
+	
+	<!-- 회원 추가 -->
+	<insert id="insertMember" parameterType="memberVo">
+		INSERT INTO MYMEMBER (MEM_ID, MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR, MEM_PHOTO)
+		values(#{mem_id}, #{mem_pass}, #{mem_name}, #{mem_tel}, #{mem_addr}, #{mem_photo})
+	</insert>
+	
+	<!-- 세션 ID 존재 여부 확인 -->
+	<select id="idChk" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM MYMEMBER
+		WHERE MEM_ID = #{mem_id}
+	</select>
+	
+	<!-- 회원 정보 상세 보기 -->
+	<select id="memberDetail" parameterType="String" resultType="memberVo">
+		SELECT MEM_ID, MEM_PASS, MEM_NAME, MEM_TEL, MEM_ADDR, MEM_PHOTO
+		FROM MYMEMBER
+		WHERE MEM_ID = #{mem_id}	
+	</select>
+	
+	<!-- 회원 정보 수정하기 -->
+	<update id="updateDetail" parameterType="memberVo">
+		UPDATE MYMEMBER SET
+		MEM_PASS = #{mem_pass},
+		MEM_NAME = #{mem_name},
+		MEM_TEL = #{mem_tel},
+		MEM_ADDR = #{mem_addr},
+		MEM_PHOTO = #{mem_photo}
+		WHERE MEM_ID = #{mem_id}
+	</update>
+	
+</mapper>
